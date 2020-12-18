@@ -56,39 +56,93 @@ def main(data_path, root_path):
     count5 = 0
     count6 = 0
     count7 = 0
+    count8 = 0
     # Iterrating over each file and checking different condition for different goals
     for i,file_name in enumerate(file_names):
         if(i % 1000 == 0):
             print("------Completed {}/{}------".format(i,l))
-        if(len(data[file_name]["goal"]["attraction"]) != 0 and len(data[file_name]["goal"]["taxi"]) == 0 and len(data[file_name]["goal"]["restaurant"]) == 0):
+        if( len(data[file_name]["goal"]["attraction"]) != 0 and 
+            len(data[file_name]["goal"]["taxi"]) == 0 and 
+            len(data[file_name]["goal"]["restaurant"]) == 0 and
+            len(data[file_name]["goal"]["police"]) == 0 and
+            len(data[file_name]["goal"]["hospital"]) == 0 and
+            len(data[file_name]["goal"]["hotel"]) == 0 and
+            len(data[file_name]["goal"]["train"]) == 0
+            ):
             write_to_file("attraction", file_name,data[file_name],root_path)
             count1 += 1
             
-        elif(len(data[file_name]["goal"]["taxi"]) != 0 and len(data[file_name]["goal"]["attraction"]) == 0 and len(data[file_name]["goal"]["restaurant"]) == 0):
+        elif( len(data[file_name]["goal"]["taxi"]) != 0 and 
+              len(data[file_name]["goal"]["attraction"]) == 0 and 
+              len(data[file_name]["goal"]["restaurant"]) == 0 and
+              len(data[file_name]["goal"]["police"]) == 0 and
+              len(data[file_name]["goal"]["hospital"]) == 0 and
+              len(data[file_name]["goal"]["hotel"]) == 0 and
+              len(data[file_name]["goal"]["train"]) == 0
+            ):
             write_to_file("taxi", file_name,data[file_name],root_path)
             count2 += 1
                 
-        elif(len(data[file_name]["goal"]["restaurant"]) != 0 and len(data[file_name]["goal"]["attraction"]) == 0 and len(data[file_name]["goal"]["taxi"]) == 0):
+        elif( len(data[file_name]["goal"]["restaurant"]) != 0 and 
+              len(data[file_name]["goal"]["attraction"]) == 0 and 
+              len(data[file_name]["goal"]["taxi"]) == 0 and
+              len(data[file_name]["goal"]["police"]) == 0 and
+              len(data[file_name]["goal"]["hospital"]) == 0 and
+              len(data[file_name]["goal"]["hotel"]) == 0 and
+              len(data[file_name]["goal"]["train"]) == 0
+            ):
             write_to_file("restaurant", file_name,data[file_name],root_path)
             count3 += 1
             
-        elif(len(data[file_name]["goal"]["attraction"]) != 0 and len(data[file_name]["goal"]["taxi"]) != 0 and len(data[file_name]["goal"]["restaurant"]) == 0):
+        elif( len(data[file_name]["goal"]["attraction"]) != 0 and
+              len(data[file_name]["goal"]["taxi"]) != 0 and 
+              len(data[file_name]["goal"]["restaurant"]) == 0 and
+              len(data[file_name]["goal"]["police"]) == 0 and
+              len(data[file_name]["goal"]["hospital"]) == 0 and
+              len(data[file_name]["goal"]["hotel"]) == 0 and
+              len(data[file_name]["goal"]["train"]) == 0
+            ):
             write_to_file("attraction_&_taxi", file_name,data[file_name],root_path)
             count4 += 1
             
-        elif(len(data[file_name]["goal"]["attraction"]) != 0 and len(data[file_name]["goal"]["restaurant"]) != 0 and len(data[file_name]["goal"]["taxi"]) == 0):
+        elif( len(data[file_name]["goal"]["attraction"]) != 0 and 
+              len(data[file_name]["goal"]["restaurant"]) != 0 and 
+              len(data[file_name]["goal"]["taxi"]) == 0 and
+              len(data[file_name]["goal"]["police"]) == 0 and
+              len(data[file_name]["goal"]["hospital"]) == 0 and
+              len(data[file_name]["goal"]["hotel"]) == 0 and
+              len(data[file_name]["goal"]["train"]) == 0
+            ):
             write_to_file("attraction_&_restaurant", file_name,data[file_name],root_path)
             count5 += 1
             
-        elif(len(data[file_name]["goal"]["restaurant"]) != 0 and len(data[file_name]["goal"]["taxi"]) != 0 and len(data[file_name]["goal"]["attraction"]) == 0):
+        elif( len(data[file_name]["goal"]["restaurant"]) != 0 and 
+              len(data[file_name]["goal"]["taxi"]) != 0 and
+              len(data[file_name]["goal"]["attraction"]) == 0 and
+              len(data[file_name]["goal"]["police"]) == 0 and
+              len(data[file_name]["goal"]["hospital"]) == 0 and
+              len(data[file_name]["goal"]["hotel"]) == 0 and
+              len(data[file_name]["goal"]["train"]) == 0
+            ):
             write_to_file("restaurant_&_taxi", file_name,data[file_name],root_path)
             count6 += 1
+
+        elif( len(data[file_name]["goal"]["restaurant"]) != 0 and 
+              len(data[file_name]["goal"]["taxi"]) != 0 and 
+              len(data[file_name]["goal"]["attraction"]) != 0 and
+              len(data[file_name]["goal"]["police"]) == 0 and
+              len(data[file_name]["goal"]["hospital"]) == 0 and
+              len(data[file_name]["goal"]["hotel"]) == 0 and
+              len(data[file_name]["goal"]["train"]) == 0
+            ):
+            write_to_file("attraction_&_restaurant_&_taxi", file_name,data[file_name],root_path)
+            count7 += 1
             
         else:
-            write_to_file("other", file_name,data[file_name],root_path)
-            count7 += 1
-    df = pd.DataFrame({'Folders':["attraction","taxi","restaurant","attraction_&_taxi","attraction_&_restaurant","restaurant_&_taxi","others"],'No Of Files': [count1, count2, count3, count4, count5, count6, count7]})
-    p = os.path.join(root_path,'trackOfNumberOfFiles.xlsx')
+            write_to_file("others", file_name,data[file_name],root_path)
+            count8 += 1
+    df = pd.DataFrame({'Folders':["attraction","taxi","restaurant","attraction_&_taxi","attraction_&_restaurant","restaurant_&_taxi","attraction_&_restaurant_&_taxi","others"],'No Of Files': [count1, count2, count3, count4, count5, count6, count7,count8]})
+    p = os.path.join(root_path,'stats.xlsx')
     writer = pd.ExcelWriter(p, engine='xlsxwriter') # pylint: disable=abstract-class-instantiated
     df.to_excel(writer, sheet_name='Sheet1')
     writer.save()
